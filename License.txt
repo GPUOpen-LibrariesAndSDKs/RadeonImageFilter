@@ -1,4 +1,0 @@
-Thank you for your interest in the AMD Radeon ProRender Developer Suite.
-These non-commercial SDKs are designed to make it easy for developers to investigate our technologies, test functionality, and remove guesswork from your development process.
-If you have any questions for our development team, or are ready to move forward to a commercial SLA, you can contact us at the e-mail below:
-- AMDRadeonProDeveloper@amd.com
