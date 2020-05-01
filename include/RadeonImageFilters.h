@@ -1,4 +1,4 @@
-﻿/*****************************************************************************\
+/*****************************************************************************\
 *
 *  Module Name    RadeonImageFilters.h
 *  Project        RadeonImageFilters
@@ -16,6 +16,8 @@
 /** @file */
 
 #pragma once
+
+#include "version.h"
 
 #ifndef __RADEONIMAGEFILTERS_H
 #define __RADEONIMAGEFILTERS_H
@@ -61,16 +63,6 @@ extern "C"
 {
 #endif
 
-#define RIF_VERSION_MAJOR 1
-#define RIF_VERSION_MINOR 5
-#define RIF_VERSION_REVISION 0
-#define RIF_COMMIT_INFO  0x53fccd8
-
-#ifndef RIF_COMMIT_INFO
-#define RIF_VERSION_BUILD               0
-#else
-#define RIF_VERSION_BUILD               RIF_COMMIT_INFO
-#endif
 
 #define RIF_MAKE_VERSION(major, minor, revision, build) \
     (((uint64_t)(major) << 58) | ((uint64_t)(minor) << 50) | ((uint64_t)(revision) << 32) | build)
@@ -273,8 +265,9 @@ extern "C"
 #define RIF_TRUE 1
 
 /* rif_context_info */
-#define RIF_CONTEXT_KERNELS_SOURCE_DIR 0x1
-#define RIF_CONTEXT_KERNELS_CACHE_DIR 0x2
+#define RIF_CONTEXT_KERNELS_SOURCE_DIR    0x1
+#define RIF_CONTEXT_KERNELS_CACHE_DIR     0x2
+#define RIF_CONTEXT_DEVICE_MEMORY_SIZE    0x3
 
 #define RIF_AI_UPSCALE_MODE_GOOD_2X 0x1
 #define RIF_AI_UPSCALE_MODE_BEST_2X 0x2
