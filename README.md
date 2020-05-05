@@ -17,3 +17,6 @@ Works across Windows®, Linux®, and macOS®
 * Windows&reg; 10 19H1 or above for DirectML support
 * Linux® Ubuntu 18.04, RHEL 7.x and 8.x and CentOS 7.x and 8.x
 * macOS Mojave and Catalina
+
+### Documentation 
+https://radeon-pro.github.io/RadeonProRenderDocs/rif/about.html
