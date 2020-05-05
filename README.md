@@ -2,7 +2,7 @@
 
 Harness the power of machine learning to enhance images with denoising, enabling your application to produce high quality images in a fraction of the time traditional denoising filters take.
 
-Uses AMD’s MIOpen machine learning library or Microsoft® DirectML for AI-accelerated denoising and upscaling
+Uses AMD’s MIOpen machine learning library, Microsoft® DirectML or Apple MPS for AI-accelerated denoising and upscaling
 Also includes standard GPU-accelerated filters for rotation, blurring, tone mapping, color changes, anti-aliasing, and edge detection (the standard filters are not AI-accelerated)
 Supports AMD GPUs as well as those of other vendors using OpenCL™ and DX12
 Supports Apple® Metal®
