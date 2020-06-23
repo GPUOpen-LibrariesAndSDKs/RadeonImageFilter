@@ -37,12 +37,13 @@ THE SOFTWARE.
 
 const rif_char code[] =
 "int2 coord;"
-"int2 size = GET_BUFFER_SIZE(outBuf);"
+"int2 size = GET_BUFFER_SIZE(outputImage);"
 "GET_COORD_OR_RETURN(coord, size);"
-"vec4 pixel = ReadPixelTyped(inBuf, coord.x, coord.y);"
+"vec4 pixel = ReadPixelTyped(inputImage, coord.x, coord.y);"
 "vec2 dxy = convert_vec2(coord)/convert_vec2(size) - (vec2)0.5f;"
 "pixel = mix(1.0f, pixel, exp(-dot(dxy, dxy) * 5));"
-"WritePixelTyped(outBuf, coord.x, coord.y, pixel);";
+"WritePixelTyped(outputImage, coord.x, coord.y, pixel);";
+
 
 int main()
 {
@@ -70,7 +71,7 @@ int main()
    if (status != RIF_SUCCESS) return -1;
 
    // Load input image
-   inputImage = ImageTools::LoadImage("images/input.png", context);
+   inputImage = ImageTools::LoadImage("images/source.png", context);
    if (!inputImage)
       return -1;
 

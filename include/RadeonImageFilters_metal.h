@@ -58,6 +58,10 @@ extern RIF_API_ENTRY rif_int rifCreateContextFromMetalContext(rif_uint64 api_ver
 */
 extern RIF_API_ENTRY rif_int rifContextCreateImageFromMetalMemory(rif_context context, rif_image_desc const * image_desc, void* mem, rif_longlong size, rif_image * out_image);
 
+
+typedef struct _MTLDevice *  MTLDevice;
+typedef struct _MTLCommandQueue *  MTLCommandQueue;
+
 #ifdef __cplusplus
 }
 #endif

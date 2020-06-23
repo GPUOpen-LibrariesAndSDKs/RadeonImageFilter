@@ -49,14 +49,13 @@ extern RIF_API_ENTRY rif_int rifCreateContextFromDirectX12Context(rif_uint64 api
 * \param[in] context — a valid rif_context object.
 * \param[in] image_desc — the description of image size and image pixels format.
 * \param[in] mem — the DirectX12 buffer with data.
-* \param[in] size — the size of \mem in bytes.
 * \param[out] out_image — the pointer to rif_image object which will be created, if the function performs successfully.
 * \return RIF_SUCCESS — if the rif_image object is created successfully. Otherwise, it returns one of the following errors:
 * \return RIF_ERROR_INVALID_CONTEXT — if \p context is not a valid rif_context.
 * \return RIF_ERROR_INVALID_PARAMETER — if \p out_image is nullptr, or \p image_desc is nullptr, or \p mem is nullptr.
 * \return RIF_ERROR_UNSUPPORTED_IMAGE_FORMAT — if image format defined by \p image_desc is currently unsupported.
 */
-extern RIF_API_ENTRY rif_int rifContextCreateImageFromDirectX12Memory(rif_context context, rif_image_desc const * image_desc, void* mem, rif_longlong size, rif_image * out_image);
+extern RIF_API_ENTRY rif_int rifContextCreateImageFromDirectX12Memory(rif_context context, rif_image_desc const * image_desc, void* mem, rif_image * out_image);
 
 
 /*!
@@ -82,14 +81,13 @@ extern RIF_API_ENTRY rif_int rifCreateOpenCLContextSharedWithDirectX11(rif_uint6
 * \param[in] context — a valid rif_context object.
 * \param[in] image_desc — the description of image size and image pixels format.
 * \param[in] mem — the DirectX11 texture with data.
-* \param[in] size — the size of \mem in bytes.
 * \param[out] out_image — the pointer to rif_image object which will be created, if the function performs successfully.
 * \return RIF_SUCCESS — if the rif_image object is created successfully. Otherwise, it returns one of the following errors:
 * \return RIF_ERROR_INVALID_CONTEXT — if \p context is not a valid rif_context.
 * \return RIF_ERROR_INVALID_PARAMETER — if \p out_image is nullptr, or \p image_desc is nullptr, or \p mem is nullptr.
 * \return RIF_ERROR_UNSUPPORTED_IMAGE_FORMAT — if image format defined by \p image_desc is currently unsupported.
 */
-extern RIF_API_ENTRY rif_int rifContextCreateImageFromDirectX11Texture(rif_context context, rif_image_desc const * image_desc, void* mem, rif_longlong size, rif_image * out_image);
+extern RIF_API_ENTRY rif_int rifContextCreateImageFromDirectX11Texture(rif_context context, rif_image_desc const * image_desc, void* mem, rif_image * out_image);
 
 /*!
 * \brief rifContextCreateImageFromDirectX11Buffer
@@ -98,14 +96,13 @@ extern RIF_API_ENTRY rif_int rifContextCreateImageFromDirectX11Texture(rif_conte
 * \param[in] context — a valid rif_context object.
 * \param[in] image_desc — the description of image size and image pixels format.
 * \param[in] mem — the DirectX11 buffer with data.
-* \param[in] size — the size of \mem in bytes.
 * \param[out] out_image — the pointer to rif_image object which will be created, if the function performs successfully.
 * \return RIF_SUCCESS — if the rif_image object is created successfully. Otherwise, it returns one of the following errors:
 * \return RIF_ERROR_INVALID_CONTEXT — if \p context is not a valid rif_context.
 * \return RIF_ERROR_INVALID_PARAMETER — if \p out_image is nullptr, or \p image_desc is nullptr, or \p mem is nullptr.
 * \return RIF_ERROR_UNSUPPORTED_IMAGE_FORMAT — if image format defined by \p image_desc is currently unsupported.
 */
-extern RIF_API_ENTRY rif_int rifContextCreateImageFromDirectX11Buffer(rif_context context, rif_image_desc const * image_desc, void* mem, rif_longlong size, rif_image * out_image);
+extern RIF_API_ENTRY rif_int rifContextCreateImageFromDirectX11Buffer(rif_context context, rif_image_desc const * image_desc, void* mem, rif_image * out_image);
 
 #ifdef __cplusplus
 }

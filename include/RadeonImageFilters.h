@@ -126,9 +126,9 @@ extern "C"
 #define RIF_PARAMETER_TYPE_LOCAL_MEMORY 24
 
 /* rif_compute_type */
-#define RIF_COMPUTE_TYPE_FLOAT 0x0
-#define RIF_COMPUTE_TYPE_FLOAT16 0x1
-
+#define RIF_COMPUTE_TYPE_FLOAT 0x0u
+#define RIF_COMPUTE_TYPE_HALF  0x1u
+#define RIF_COMPUTE_TYPE_FLOAT16 RIF_COMPUTE_TYPE_HALF
 
 /* rif_backend_api_type */
 #define RIF_BACKEND_API_OPENCL 0
@@ -214,6 +214,13 @@ extern "C"
 #define RIF_IMAGE_FILTER_PHOTO_LINEAR_TONEMAP 0x27
 #define RIF_IMAGE_FILTER_PHOTO_TONEMAP 0x29
 #define RIF_IMAGE_FILTER_FILMIC_UNCHARTED_TONEMAP 0x4F
+//Binary operation filters
+#define RIF_IMAGE_FILTER_ADD 0x50
+#define RIF_IMAGE_FILTER_MUL 0x51
+#define RIF_IMAGE_FILTER_SUB 0x52
+#define RIF_IMAGE_FILTER_DIV 0x53
+#define RIF_IMAGE_FILTER_MAX 0x54
+#define RIF_IMAGE_FILTER_MIN 0x55
 
 //Depth of field kernel size parameter values
 #define RIF_DEPTH_OF_FIELD_FILTER_KERNEL_SIZE_SMALL 0x0u
@@ -969,43 +976,6 @@ extern RIF_API_ENTRY rif_int rifParameterGetInfo(rif_image_filter image_filter, 
 */
 extern RIF_API_ENTRY rif_int rifObjectDelete(void * obj);
 
-// Kernels directory API
-
-// Directory with OpenCL/Metal kernels might be changed and requested with functions declared below.
-// It might also be changed with environment variable RIF_KERNELS_DIR.
-// Kernels directory value proirity (low -> high): default -> external -> environment.
-// Use rifSetKernelsDir(context, path_to_kernels) to set external value.
-// Use rifSetKernelsDir(context, NULL) to unset external value, and fallback to default value.
-
-/*!
-* \brief rifGetKernelsDir
-* RIF_DEPRECATED function. Uses rifContextGetInfo with context_info = RIF_CONTEXT_KERNELS_SOURCE_DIR
-*
-* Gets kernels directory.
-*
-* \param[in] context — a valid rif_context object.
-* \param[out] kernels_dir — memory pointer to write kernels directory to.
-* \param[out] size_ret — the size of the data stored in \p kernels_dir (includes \0 at the end).
-* \return RIF_SUCCESS — if the function is executed successfully. Otherwise, it returns one of the following errors:
-* \return RIF_ERROR_INVALID_CONTEXT — if \p context is not a valid rif_context.
-* \return RIF_ERROR_INVALID_PARAMETER — if \p kernels_dir and \p size_ret are both NULL.
-*/
-RIF_DEPRECATED extern RIF_API_ENTRY rif_int rifGetKernelsDir(rif_context context, rif_char * kernels_dir, size_t * size_ret);
-
-/*!
-* \brief rifSetKernelsDir
-* RIF_DEPRECATED function. Use rifContextSetInfo with context_info = RIF_CONTEXT_KERNELS_SOURCE_DIR
-*
-* Sets kernels directory.
-*
-* \param[in] context — a valid rif_context object.
-* \param[in] kernels_dir — memory pointer with kernels directory path, or NULL to use default path.
-* \return RIF_SUCCESS — if the function is executed successfully. Otherwise, it returns one of the following errors:
-* \return RIF_ERROR_INVALID_CONTEXT — if \p context is not a valid rif_context.
-* \return RIF_ERROR_IO_ERROR — if \p kernels_dir is not accesible.
-*/
-RIF_DEPRECATED extern RIF_API_ENTRY rif_int rifSetKernelsDir(rif_context context, rif_char const * kernels_dir);
-
 /*!
 * \brief rifContextGetInfo
 *
@@ -1059,6 +1029,8 @@ extern RIF_API_ENTRY rif_int rifSyncronizeQueue(rif_command_queue command_queue)
 extern RIF_API_ENTRY const char* rifGetErrorCodeDescription(rif_int error);
 
 extern RIF_API_ENTRY const char* rifGetErrorCodeString(rif_int error);
+
+extern RIF_API_ENTRY const char* rifGetLastErrorMessage();
 
 #ifdef __cplusplus
 }

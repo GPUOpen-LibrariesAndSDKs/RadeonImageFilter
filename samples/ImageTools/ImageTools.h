@@ -281,13 +281,13 @@ void CopyAndConvert(dstT* dst, srcT* src, size_t size, dstT factor, bool clamp =
     }
 }
 
-rif_image LoadBinImage(const std::string& path, int width, int height, int cnum, rif_context context)
+rif_image LoadBinImage(const std::string& path, int width, int height, int cnum, rif_context context, rif_component_type type = RIF_COMPONENT_TYPE_FLOAT32)
 {
     rif_image img = nullptr;
 
     rif_image_desc desc;
     memset(&desc, 0, sizeof(desc));
-    desc.type = RIF_COMPONENT_TYPE_FLOAT32;
+    desc.type = type;
 
     std::ifstream input(path, std::ios::binary);
     std::vector<unsigned char> buf(std::istreambuf_iterator<char>(input), {});
