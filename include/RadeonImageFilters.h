@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "version.h"
+#include "RadeonImageFilters_version.h"
 
 #ifndef __RADEONIMAGEFILTERS_H
 #define __RADEONIMAGEFILTERS_H
@@ -390,7 +390,7 @@ rif_int device_id, rif_char const * cache_path, rif_context * out_context);
 * \return RIF_ERROR_INVALID_PARAMETER — if \p name or \p vendor is nullptr.
 * \return RIF_ERROR_INVALID_CONTEXT — if getting of the device info failed.
 */
-extern RIF_API_ENTRY rif_int rifContextGetDeviceInfo(rif_context context, rif_char name[128], rif_char vendor[128]);
+RIF_DEPRECATED extern RIF_API_ENTRY rif_int rifContextGetDeviceInfo(rif_context context, rif_char name[128], rif_char vendor[128]);
 
 // images
 
@@ -467,19 +467,20 @@ extern RIF_API_ENTRY rif_int rifImageUnmap(rif_image image, void* ptr);
 extern RIF_API_ENTRY rif_int rifContextCreateCommandQueue(rif_context context, rif_command_queue* command_queue);
 
 /*!
-* \brief rifContextCreateCommandQueue
-* Creates the new command_queue object associated with context \p context.
+* \brief rifContextExecuteCommandQueue
+* Starts the execution of the command_queue object associated with context \p context. All the filters in queue are not 
+* guarantied to complete execution by the time this function returns. See rifFlushQueue, rifSyncronizeQueue.
 *
 * \param[in] context — a valid rif_context object.
-* \param[in] command_queue — the pointer to rif_command_queue object which will be created if the function performs successfully.
-* \param[in] executionFinishedCallbackFunction — the user callback function which will be called when command queue will be executed.
+* \param[in] command_queue — the pointer to rif_command_queue object to execute.
+* \param[in] executionFinishedCallbackFunction — the user callback function which will be called after command queue executution started.
 * executionFinishedCallbackFunction can be a nullptr.
 * \param[in] data — the user data which will be passed to executionFinishedCallbackFunction.
 * \param[out] time — if not nullptr, will activate profiling and will store execution time. Must be initialized to 0 by user.
 * \return RIF_SUCCESS — if the command queue is executed successfully. Otherwise, it returns one of the following errors:
 * \return RIF_ERROR_INVALID_CONTEXT — if \p context is not a valid rif_context object.
 * \return RIF_ERROR_INVALID_QUEUE — if \p command_queue is not a valid rif_command_queue object.
-* \return RIF_ERROR_INTERNAL_ERROR — if an internal RadeonImageFiflters error occurs. Sends a bug report if such an error occurs.
+* \return RIF_ERROR_INTERNAL_ERROR — if an internal error occurs. Send a bug report if such an error occurs.
 */
 extern RIF_API_ENTRY rif_int rifContextExecuteCommandQueue(rif_context context, rif_command_queue command_queue,
    rif_exec_command_queue_callback executionFinishedCallbackFunction, void *data, float* time);
