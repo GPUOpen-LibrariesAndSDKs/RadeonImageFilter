@@ -1,8 +1,8 @@
 
 #define RIF_VERSION_MAJOR      1
 #define RIF_VERSION_MINOR      5
-#define RIF_VERSION_REVISION   3
-#define RIF_COMMIT_INFO        0x47b72111
+#define RIF_VERSION_REVISION   4
+#define RIF_COMMIT_INFO        0x05d31e03
 
 
 
