@@ -1,4 +1,4 @@
-release note 1.6.0.
+# release note 1.6.0.
 Features :
 * remove deprecated API
 * new API rifGetDeviceInfo
