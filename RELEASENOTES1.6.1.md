@@ -1,4 +1,4 @@
-Release note 1.6.1
+# Release note 1.6.1
 Features :
 * Add static build
 * update MIopen
