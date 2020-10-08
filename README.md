@@ -18,5 +18,10 @@ Works across Windows®, Linux®, and macOS®
 * Linux® Ubuntu 18.04, RHEL 7.x and 8.x and CentOS 7.x and 8.x
 * macOS Mojave and Catalina
 
+### Static Build
+With release 1.6.1 we introduced static build too.
+It is just for the main module, so RadeonImageFilters. The others ones will still be dynamic as we have a delay load mechanism for all of them.
+Therefore in the Static folder you will only find the radeonImageFilters static lib/a file and the other dll/so/dylib file are located in the Dyniacm folder
+
 ### Documentation 
 https://radeon-pro.github.io/RadeonProRenderDocs/rif/about.html
