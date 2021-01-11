@@ -198,6 +198,7 @@ extern "C"
 #define RIF_IMAGE_FILTER_DILATE_ERODE 0x1Au
 #define RIF_IMAGE_FILTER_POSTERIZE 0x1Bu
 #define RIF_IMAGE_FILTER_BLOOM 0x30u
+#define RIF_IMAGE_FILTER_BLOOM_REALTIME 0x57u
 #define RIF_IMAGE_FILTER_DEPTH_OF_FIELD 0x33u
 #define RIF_IMAGE_FILTER_NDC_DEPTH 0x34u
 #define RIF_IMAGE_FILTER_CONVERT 0x35u
@@ -222,6 +223,11 @@ extern "C"
 #define RIF_DEPTH_OF_FIELD_FILTER_KERNEL_SIZE_MEDIUM 0x1u
 #define RIF_DEPTH_OF_FIELD_FILTER_KERNEL_SIZE_LARGE 0x2u
 #define RIF_DEPTH_OF_FIELD_FILTER_KERNEL_SIZE_VERY_LARGE 0x3u
+
+//Bloom filter quality parameter values
+#define RIF_BLOOM_FILTER_QUALITY_GOOD 0x0u
+#define RIF_BLOOM_FILTER_QUALITY_MEDIUM 0x1u
+#define RIF_BLOOM_FILTER_QUALITY_BAD 0x2u
 
 /*rif_image_filter_interpolation_operator*/
 #define RIF_IMAGE_INTERPOLATION_NEAREST 0x0u
@@ -317,6 +323,16 @@ typedef rif_uint rif_interpolation_operator;
 typedef rif_uint rif_compute_type;
 
 typedef void* rif_exec_command_queue_callback(void*);
+
+struct _rif_performance_statistic
+{
+    rif_uint64 execution_time;
+    rif_bool measure_execution_time;
+    rif_float  compile_time;
+    rif_bool measure_compile_time;
+};
+
+typedef struct _rif_performance_statistic rif_performance_statistic;
 
 struct _rif_image_desc
 {
@@ -468,15 +484,15 @@ extern RIF_API_ENTRY rif_int rifContextCreateCommandQueue(rif_context context, r
 * \param[in] command_queue - the pointer to rif_command_queue object to execute.
 * \param[in] executionFinishedCallbackFunction - the user callback function which will be called after command queue executution started.
 * executionFinishedCallbackFunction can be a nullptr.
-* \param[in] data - the user data which will be passed to executionFinishedCallbackFunction.
-* \param[out] time - if not nullptr, will activate profiling and will store execution time. Must be initialized to 0 by user.
-* \return RIF_SUCCESS - if the command queue is executed successfully. Otherwise, it returns one of the following errors:
-* \return RIF_ERROR_INVALID_CONTEXT - if \p context is not a valid rif_context object.
-* \return RIF_ERROR_INVALID_QUEUE - if \p command_queue is not a valid rif_command_queue object.
-* \return RIF_ERROR_INTERNAL_ERROR - if an internal error occurs. Send a bug report if such an error occurs.
+* \param[in] data — the user data which will be passed to executionFinishedCallbackFunction.
+* \param[out] statistics — if not nullptr and matching flags are set, will activate profiling and will store execution time and compiling time.
+* \return RIF_SUCCESS — if the command queue is executed successfully. Otherwise, it returns one of the following errors:
+* \return RIF_ERROR_INVALID_CONTEXT — if \p context is not a valid rif_context object.
+* \return RIF_ERROR_INVALID_QUEUE — if \p command_queue is not a valid rif_command_queue object.
+* \return RIF_ERROR_INTERNAL_ERROR — if an internal error occurs. Send a bug report if such an error occurs.
 */
 extern RIF_API_ENTRY rif_int rifContextExecuteCommandQueue(rif_context context, rif_command_queue command_queue,
-   rif_exec_command_queue_callback executionFinishedCallbackFunction, void *data, float* time);
+   rif_exec_command_queue_callback executionFinishedCallbackFunction, void *data, rif_performance_statistic* statistics);
 
 // image filters
 
@@ -1039,9 +1055,54 @@ extern RIF_API_ENTRY const char* rifGetErrorCodeString(rif_int error);
 /*!
 * \brief rifGetErrorCodeString
 * Returns the last error description.
-*
 */
 extern RIF_API_ENTRY const char* rifGetLastErrorMessage();
+
+/*!
+* \brief rifLoggerClear
+* Disables all log messages.
+*
+* \return RIF_SUCCESS - if the function is executed successfully.
+*/
+extern RIF_API_ENTRY rif_int rifLoggerClear();
+
+/*!
+* \brief rifLoggerAttachDefault
+* Sets default logging configuration: errors to stderr, messages to stdout.
+*
+* \return RIF_SUCCESS - if the function is executed successfully.
+*/
+extern RIF_API_ENTRY rif_int rifLoggerAttachDefault();
+
+#define RIF_LOG_LEVEL_DISABLED 0
+#define RIF_LOG_LEVEL_ERROR 1
+#define RIF_LOG_LEVEL_MESSAGE 2
+#define RIF_LOG_LEVEL_WARNING 3
+#define RIF_LOG_LEVEL_INFO 4
+#define RIF_LOG_LEVEL_DEBUG 5
+#define RIF_LOG_LEVEL_TOTAL 6
+#define RIF_LOG_LEVEL_DEFAULT RIF_LOG_LEVEL_MESSAGE
+
+struct rif_logger_desc
+{
+    int level;
+    struct stream
+    {
+        void* handle; // FILE* handle, stdout, stderr
+        void* rdbuf; // std::cout.rdbuf(), std::cerr.rdbuf(), *std::stringbuf, *std::filebuf
+        const char* filename;
+    } error, message;
+};
+
+/*!
+* \brief rifLoggerAttach
+* Attaches new logger.
+*
+* \param[in] desc - a valid rif_logger_desc object.
+* \return RIF_SUCCESS - if the function is executed successfully. Otherwise, it returns one of the following errors:
+* \return RIF_ERROR_IO_ERROR - if file handle specified in \p desc is invalid, filename specified in \p desc cannot be opened for writing.
+*/
+extern RIF_API_ENTRY rif_int rifLoggerAttach(rif_logger_desc* desc);
 
 #ifdef __cplusplus
 }
