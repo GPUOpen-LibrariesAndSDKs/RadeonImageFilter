@@ -5,4 +5,5 @@ Features :
 Bug fixes :
 * Update RML to fix problem on ubuntu miopen backend https://github.com/GPUOpen-LibrariesAndSDKs/RadeonImageFilter/issues/13
 * Clang 5 ubuntu support
+* drop support of static library
 
