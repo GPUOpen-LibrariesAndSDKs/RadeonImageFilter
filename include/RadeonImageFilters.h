@@ -356,6 +356,15 @@ struct _rif_image_desc
 
 typedef struct _rif_image_desc rif_image_desc;
 
+struct _rif_ai_models_desc
+{
+    rif_image_filter_type filter_type;
+    rif_uint* param;
+    rif_compute_type compute_type;
+};
+
+typedef struct _rif_ai_models_desc rif_ai_models_desc;
+
 // context
 
 /*!
@@ -1037,6 +1046,22 @@ extern RIF_API_ENTRY rif_int rifFlushQueue(rif_command_queue command_queue);
 * \return RIF_ERROR_INVALID_QUEUE - if \p command_queue is not a valid rif_command_queue object.
 */
 extern RIF_API_ENTRY rif_int rifSyncronizeQueue(rif_command_queue command_queue);
+
+/*!
+ * \brief rifGetModelMemorySize
+ * Get memory size is needed for filter.
+ *
+ * \param[in] image_desc - the description of image size and image pixels format.
+ * \param[in] model_desc - the description of model type, type of data and additional parameters.
+ * \param[out] memory_size - the pointer to rif_uint64 memory size.
+ * \param[in] model_path - path to AI models.
+ * \return RIF_SUCCESS - if the rifGetMemoryInfo performs successfully..
+ * Otherwise, it returns one of the following errors: \return RIF_ERROR_INTERNAL_ERROR - if \p
+ * device is nullptr. \return RIF_ERROR_INVALID_PARAMETER - if \p type is
+ * currently unsupported.
+ */
+extern RIF_API_ENTRY rif_int rifGetModelMemorySize(rif_image_desc const* image_desc, rif_ai_models_desc const* model_desc, rif_uint64* memory_size,
+    const rif_char* model_path = nullptr);
 
 /*!
 * \brief rifGetErrorCodeDescription
